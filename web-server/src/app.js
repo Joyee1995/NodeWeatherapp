@@ -2,6 +2,8 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const hbs = require('hbs')
+const geocode = require(__dirname + '/utils/geocode')
+const forecast = require(__dirname + '/utils/forecast')
 
 const publicdir = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../template/views')
@@ -63,12 +65,24 @@ app.get('/weather', (req, res) => {
         return res.send({
             error: 'please provide address'
         })
-    } res.send({
-        forecast: 'It is snowing',
-        location:'Malaysia',
-        address: req.query.address
-    })
+    } 
+    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return res.send({error})
+        }
+        forecast(latitude, longitude, (error, forecastdata) => {
+            if (error) {
+                return res.send({error})
+            }
 
+        res.send({
+            forecast:forecastdata,
+            location,
+            address: req.query.address
+        })
+        })
+
+    })
 })
 
 
