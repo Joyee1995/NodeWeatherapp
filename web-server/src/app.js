@@ -59,6 +59,21 @@ app.get('/weather',(req,res)=>{
 })
 
 
+//*表示其他沒有設route的地址
+app.get('/help/*',(req,res)=>{
+    res.render('404',{
+        errorMessage: 'Help article not found'
+    })
+})
+app.get('*',(req,res)=>{
+    res.send('PAGE NOT FOUND!')
+})
+
+// app.use((req,res)=>{
+//     res.type('text/plain');
+//     res.status(404);
+//     res.send('404-找不到網頁');
+// })
 
 app.listen(3000,()=>{
     console.log('Server is up on port 3000.')
