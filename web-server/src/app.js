@@ -8,6 +8,7 @@ const forecast = require(__dirname + '/utils/forecast')
 const publicdir = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../template/views')
 const partialPath = path.join(__dirname, '../template/partials')
+const port = process.env.PORT || 3000
 // console.log(path.join(__dirname,'../views'))
 
 // console.log(__dirname)
@@ -102,6 +103,6 @@ app.get('*', (req, res) => {
 //     res.send('404-找不到網頁');
 // })
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000.')
+app.listen(port, () => {
+    console.log('Server is up on port'+port)
 })
